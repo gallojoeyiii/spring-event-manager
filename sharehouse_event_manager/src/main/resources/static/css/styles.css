@@ -1,0 +1,24 @@
+@charset "UTF-8";
+
+
+.error {
+  color: red;
+}
+
+#myPage{
+  border-style: double;
+  border-radius: 1;
+  margin-right:auto;
+}
+
+#myPageFull{
+  border-style: solid;
+  border-radius: 1;
+  margin-right:auto;
+  
+}
+
+.button {
+  display: flex;
+  gap: 10px; 
+}

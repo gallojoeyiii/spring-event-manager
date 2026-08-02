@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>イベントリスト</title>
+    <link href="css/styles.css" rel="stylesheet">
+    <script src="js/script.js"></script>
+
+</head>
+
+
+<body>
+<h3>イベントリスト画面</h3>
+
+<p th:text="|自分のユーザーID：${session.user.getUserId}|">user id</p>
+
+<p>一番人気のイベント： <span th:text="${session.mostPopular}">id01</span></p>
+
+   <form th:action="@{/process-action}" method="post">
+      <table border="1">
+      <caption>イベントリスト</caption>
+      <thead>
+        <tr>
+          <th></th>
+          <th>タイトル</th>
+          <th>カテゴリ</th>
+          <th>開催日</th>
+          <th>場所</th>
+          <th>参加人数</th>
+          <th>定員</th>
+          <th>詳細</th>
+          <th>制作者のユーザーID</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="event : ${session.events}">
+          <td><input type="radio" 
+                           name="selectedEventId" 
+                           th:value="${event.eventId}" 
+                           required /></td>
+          <td th:text="${event.getTitle}">id01</td>
+          <td th:text="${event.getCategory}">〇〇</td>
+          <td th:text="${#temporals.format(event.getEventDate, 'yyyy-MM-dd HH:mm')}">管理者</td>
+          <td th:text="${event.getLocation}">2025/12/11</td>
+          <td th:text="${event.getParticipantCount}">2025/12/11</td>
+          <td th:text="${event.getCapacity}">2025/12/12</td>
+          <td th:text="${event.getDescription}">2025/12/12</td>
+          <td th:text="${event.getUserId}">2025/12/12</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="button">
+    <button type="submit" name="action" value="view" id="view">参加ステータスを変更</button>
+    <button type="submit" name="action" value="delete" id="delete" onclick="return confirmDelete()">イベントの削除</button>
+    <button type="submit" name="action" value="update" id="update">イベントの編集</button></div>
+    </form>
+
+    <div  th:if="${notCreatorError}" th:text="${notCreatorError}" class="error">エラーメッセージ</div>
+
+    <br>
+    <form th:action="@{/process-create}" method="post">
+      <button type="submit">イベントの制作</button>
+
+    </form>
+
+    <br>
+
+    <p>＊イベントの作成者だけが、イベントを削除または編集できます</p>
+
+    <form action="myPage" method="get">
+        <button>戻る</button>
+    </form>
+</body>
+
+
+
+
+
+
+
+
+
+</html>

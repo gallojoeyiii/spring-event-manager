@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>マイページ</title>
+    <link href="css/styles.css" rel="stylesheet">
+
+</head>
+
+
+<body>
+    <div id="myPageFull">
+    <h3 th:text="|${session.user.getDisplayName}さんのマイページ|">〇〇さんのマイページ</h3>
+     <div th:text="|ユーザーID: ${session.user.getUserId}|">User Id</div> 
+    
+    <div id="myPage">
+    <span style="font-weight: bold;">今後のイベントの数：</span>
+    <span th:if="${eventSize}">
+        <span th:text="|${eventSize}|">〇〇さんのマイページ</span>
+    </span>
+    <span th:unless="${eventSize}">
+        <span th:text="|${session.eventSize}|">〇〇さんのマイページ</span>
+    </span>
+
+
+
+    <div style="font-weight: bold;">次のイベント：</div>
+
+    <span th:if="${nextEvent}">
+        <span th:text="|${nextEvent.getTitle}|">Event
+            Details</span>
+            <br>
+            <span
+            th:text="|${#temporals.format(nextEvent.getEventDate, 'yyyy-MM-dd HH:mm')}|">
+            Event Details</span>
+    </span>
+
+    <span th:if="${session.nextEvent != null and nextEvent == null}">
+        <span
+            th:text="|${session.nextEvent.getTitle}|">
+            Event Details</span>
+            <br>
+            <span
+            th:text="|${#temporals.format(session.nextEvent.getEventDate, 'yyyy-MM-dd HH:mm')}|">
+            Event Details</span>
+    </span>
+    
+    <span th:if="${nextEvent == null and session.nextEvent == null}">
+        <div>予定されているイベントはありません。</div> 
+    </span>
+    </div>
+    <br>
+
+    <table border="1">
+        <caption style="font-weight: bold;">参加するイベントリスト：</caption>
+        <tr>
+            <th>タイトル</th>
+            <th>日付</th>
+        </tr>
+
+        <span th:if="${userEvents}">
+            <tr th:each="event : ${userEvents}">
+
+                <td th:text="${event.getTitle}">id01</td>
+                <td th:text="${#temporals.format(event.getEventDate, 'yyyy-MM-dd HH:mm')}">id01</td>
+
+            </tr>
+        </span>
+
+        <span th:unless="${userEvents}">
+            <tr th:each="event : ${session.userEvents}">
+
+                <td th:text="${event.getTitle}">id01</td>
+                <td th:text="${#temporals.format(event.getEventDate, 'yyyy-MM-dd HH:mm')}">id01</td>
+
+            </tr>
+        </span>
+
+
+
+    </table>
+
+
+    <form action="eventList" method="get">
+
+        <button>イベントリストへ</button>
+
+    </form>
+
+    <br>
+
+
+    <form action="logout" method="post">
+        <button>ログアウト</button>
+    </form>
+
+    </div>
+
+    <!-- <form action="deleteAccount" method="post">
+        <button>アカウントの削除</button>
+    </form> -->
+
+</body>
+
+
+
+
+
+
+
+
+
+</html>

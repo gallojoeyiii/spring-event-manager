@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>新しいユーザーの作成</title>
+    <link href="css/styles.css" rel="stylesheet">
+
+</head>
+
+
+<body>
+
+  <h3>ユーザー作成画面</h3>
+
+    <p th:if="${errMsg}" th:text="${errMsg}" class="error">エラーメッセージ</p>
+
+  <form action="login" method="post" th:object="${userForm}">
+    <fieldset>
+      <div>
+        <label>Username:</label>
+        <input type="text" th:field="*{userName}">
+        <span th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}" class="error">エラーメッセージ</span>
+      </div>
+      <div>
+        <label>Password:</label>
+        <input type="password" th:field="*{password}">
+        <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"  class="error">エラーメッセージ</span>
+      </div>
+
+      <div>
+        <label>Display Name:</label>
+        <input type="text" th:field="*{displayName}">
+        <span th:if="${#fields.hasErrors('displayName')}" th:errors="*{displayName}" class="error">エラーメッセージ</span>
+      </div>
+    </fieldset>
+    
+    <div class="button"><button>制作</button>
+  </form>
+
+  <form action="index" method="get">
+        <button>戻る</button>
+    </form>
+
+</div>
+
+</body>
+
+
+</html>
